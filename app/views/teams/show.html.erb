@@ -1,0 +1,91 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 p-0 mb-3">
+      <%= render 'shared/header'%>
+    </div>
+    <div class="col-md-6  d-flex flex-row bd-highlight mb-3">
+      <div class="p-1">
+        <b><h4><%=@team.name.capitalize%> Team</h4></b>
+      </div>
+    </div>
+
+    <div class="col-md-6  mb-3 d-flex flex-row-reverse bd-highlight">
+      <div class="p-1">
+        <button type="button" class="font-weight-bold index_buttons btn btn-secondary" data-toggle="modal" data-target="#inviteModal">
+          Add Member
+        </button>
+      </div>
+      <div class="p-1">
+        <%= link_to "Add Project", new_team_project_path(@team), class: "font-weight-bold index_buttons btn btn-secondary" %>
+      </div>
+      <div class="p-1">
+        <%= link_to "Back", root_path, class: "font-weight-bold index_buttons btn btn-secondary" %>
+      </div>
+    </div>
+    <%@team.projects.each do |project| %>
+      <div class="col-md-3">
+        <div class="card text-left">
+          <div class="card-header bg-primary d-flex flex-row-reverse bd-highlight">
+            <div class="p-1 bd-highlight">
+              <%= link_to "", team_project_path(@team,project), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-light fas fa-trash" %>
+            </div>
+            <div class="p-1 bd-highlight">
+              <%= link_to "", edit_team_project_path(@team,project), class: "btn btn-light fas fa-edit" %>
+              </div>
+            <div class="p-1 bd-highlight">
+              <%= link_to "", team_project_path(@team,project), class: "btn btn-light fas fa-eye" %>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title"><%=project.name%></h5>
+            <p class="card-text"><%=project.title%></p>
+            <a href="#" class="btn btn-secondary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+    <%end%>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Send Invite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= form_for :invitation, url: teams_send_invite_path do |f| %>
+          <%= f.hidden_field :team_id, :value => @team.id %>
+          <div class="form-group row">
+            <%= f.label :email, class: "col-sm-2 col-form-label"%>
+            <div class="col-sm-10">
+              <%= f.text_field :email, placeholder: "abc@abc.com", class: "form-control" %>
+            </div>
+          </div>
+          <p class="text-muted">Select a role for user</p>
+          <div class="form-group row">
+            <%User::ROLES.each do |value|%>
+              <label for= "user_role_" class="font-weight-bold col-sm-3 col-form-label"><%=value.capitalize%></label>
+              <div class="col-sm-1">
+                <%= f.radio_button :role, value, id: "user_role_#{value}", class: "form-control role_radio" %>
+              </div>
+            <%end%>
+          </div>
+
+          <div class="d-flex justify-content-center">
+            <div class="pl-1 ">
+              <button type="button" class="btn btn-primary device_buttons" data-dismiss="modal">Close</button>
+            </div>
+            <div class="pl-1 ">
+              <%= f.submit "Submit", class:"btn btn-primary device_buttons" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

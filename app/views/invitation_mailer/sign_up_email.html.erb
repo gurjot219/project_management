@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi <%= @email %></h1>
+    <p>
+      Welcome to project managemant app.
+      You have been assigned a position of <%=@role.capitalize%>
+      in <%=@team_name%> team.
+    </p>
+    <p>
+      Please click the below given link to setup your account.
+      <a href="http://localhost:3000/teams/invite_sign_up?email=<%=@email%>&team_id=<%=@team_id%>">Add Account!</a>
+    </p>
+  </body>
+</html>

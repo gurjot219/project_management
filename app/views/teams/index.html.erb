@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 p-0 mb-3">
+      <%= render 'shared/header'%>
+    </div>
+    <div class="col-md-12  mb-3 d-flex flex-row-reverse bd-highlight">
+      <div class="p-1">
+        <%= link_to "Add Team", new_team_path, class: "index_buttons btn btn-secondary" %>
+      </div>
+    </div>
+    <%@teams.each do |team| %>
+      <div class="col-md-3">
+        <div class="card text-left">
+          <div class="card-header bg-primary d-flex flex-row-reverse bd-highlight">
+            <div class="p-1 bd-highlight">
+              <%= link_to "", team_path(team), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-light fas fa-trash" %>
+            </div>
+            <div class="p-1 bd-highlight">
+              <%= link_to "", edit_team_path(team), class: "btn btn-light fas fa-edit" %>
+              </div>
+            <div class="p-1 bd-highlight">
+              <%= link_to "", team_path(team), class: "btn btn-light fas fa-eye" %>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title"><%=team.name%></h5>
+            <p class="card-text"><%=team.title%></p>
+            <a href="#" class="btn btn-secondary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+    <%end%>
+  </div>
+</div>
