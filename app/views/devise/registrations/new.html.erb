@@ -6,6 +6,9 @@
     </div>
     <div class="card-body">
       <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%if params[:team_id].present?%>
+          <%=f.hidden_field :team_id, :value => params[:team_id] %>
+        <%end%>
         <div class="form-group row">
           <%= f.label :email, for: "staticEmail", class: "col-sm-2 col-form-label"%>
           <div class="col-sm-10">
